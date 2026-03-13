@@ -1,0 +1,44 @@
+{
+  "statistics": [
+    {
+      "id": "stat-001",
+      "title": "Total Tasks",
+      "icon": "📊",
+      "value": 17,
+      "change": "+12",
+      "changeLabel": "this week",
+      "changeType": "positive",
+      "color": "#1976D2"
+    },
+    {
+      "id": "stat-002",
+      "title": "Completed",
+      "icon": "✅",
+      "value": 6,
+      "change": "+5",
+      "changeLabel": "this week",
+      "changeType": "positive",
+      "color": "#4CAF50"
+    },
+    {
+      "id": "stat-003",
+      "title": "In Progress",
+      "icon": "⚡",
+      "value": 5,
+      "change": "+8",
+      "changeLabel": "this week",
+      "changeType": "positive",
+      "color": "#FF9800"
+    },
+    {
+      "id": "stat-004",
+      "title": "Overdue",
+      "icon": "⚠️",
+      "value": 3,
+      "change": "-2",
+      "changeLabel": "this week",
+      "changeType": "negative",
+      "color": "#F44336"
+    }
+  ]
+}
