@@ -1,1 +1,18 @@
-<p>sidebar works!</p>
+<aside class="side-bar w-50 min-h-screen sticky p-4 bg-gray-400/20">
+  <div class="side-bar__company pb-3 border-b border-gray-300">
+    <img src="company-logo.png" alt="Company Logo">
+  </div>
+
+  <nav class="side-bar__menu flex flex-col gap-3 pt-4">
+    @for (item of navItems; track item.path) {
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        class="side-bar__menu__item flex flex-row gap-2 items-center p-2 text-gray-700"
+      >
+        <img [src]="item.icon" [alt]="item.label" class="size-7 text-gray-700">
+        <span class="nav-label text-xl font-semibold">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+</aside>
