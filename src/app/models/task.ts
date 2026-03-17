@@ -18,13 +18,16 @@ export interface ITask {
   completedAt?: string;
 }
 
-export const TASK_STATUSES: TTaskStatus[] = ['todo', 'in_progress', 'done'];
-export const TASK_PRIORITIES: TTaskPriority[] = ['low', 'medium', 'high'];
-
 export const STATUS_LABELS: Record<TTaskStatus, string> = {
   todo: 'Todo',
   in_progress: 'In Progress',
   done: 'Done',
+};
+
+export const STATUS_COLORS: Record<TTaskStatus, string> = {
+  todo: 'bg-sky-300/50',
+  in_progress: 'bg-yellow-200/50',
+  done: 'bg-emerald-200/50',
 };
 
 export const PRIORITY_LABELS: Record<TTaskPriority, string> = {

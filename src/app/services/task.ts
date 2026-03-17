@@ -57,9 +57,27 @@ export class TaskService {
     this.#tasks.update(tasks => tasks.filter(t => t.id !== id));
   }
 
-  moveTask(id: string, status: TTaskStatus): void {
+  moveTask(id: string, status: TTaskStatus, toIndex: number): void {
     const changes: Partial<ITask> = { status };
     if (status === 'done') changes.completedAt = new Date().toISOString();
-    this.updateTask(id, changes);
+
+    this.#tasks.update(tasks => {
+      const task = tasks.find(t => t.id === id)!;
+      const updated = { ...task, ...changes };
+      const without = tasks.filter(t => t.id !== id);
+
+      const targetTasks = without.filter(t => t.status === status);
+      const otherTasks = without.filter(t => t.status !== status);
+
+      targetTasks.splice(toIndex, 0, updated);
+      return [...otherTasks, ...targetTasks];
+    });
+  }
+
+  reorderTasks(status: TTaskStatus, reordered: ITask[]): void {
+    this.#tasks.update(tasks => {
+      const others = tasks.filter(t => t.status !== status);
+      return [...others, ...reordered];
+    });
   }
 }

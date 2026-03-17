@@ -1,1 +1,7 @@
-<p>tasks works!</p>
+<main class="p-7">
+  <div class="flex justify-between px-4">
+    <h1 class="text-3xl font-bold text-gray-800 pb-3">Task Board</h1>
+    <button class="bg-blue-700/80 px-3 rounded-lg text-lg font-semibold text-white cursor-pointer hover:bg-blue-800/80 transition duration-300 ease-in-out" (click)="openAddTaskDialog()">+ Add Task</button>
+  </div>
+  <app-kanban></app-kanban>
+</main>
