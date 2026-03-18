@@ -1,5 +1,5 @@
 import { Component, inject, computed, ChangeDetectionStrategy, input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from '../../services/task';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog';
@@ -7,6 +7,7 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 import { PRIORITY_LABELS, STATUS_LABELS } from '../../models/task';
 import { IConfirmDialogData } from '../../models/confirm-dialog-data';
 import { DatePipe } from '@angular/common';
+import { EditTaskDialogComponent } from '../../components/edit-task-dialog/edit-task-dialog';
 
 @Component({
   selector: 'app-task-details',
@@ -19,7 +20,6 @@ export class TaskDetailsComponent {
   id = input.required<string>();
 
   #taskService = inject(TaskService);
-  #router = inject(Router);
   dialog = inject(MatDialog);
 
   priorityLabels = PRIORITY_LABELS;
@@ -70,6 +70,20 @@ export class TaskDetailsComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.#taskService.deleteTask(taskId);
+      }
+    });
+  }
+
+  openEditTaskDialog(): void {
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+      width: '500px',
+      data: this.task(),
+      panelClass: 'rounded-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.#taskService.updateTask(this.id(), result);
       }
     });
   }

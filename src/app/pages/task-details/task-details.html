@@ -1,6 +1,6 @@
 <main class="px-30 py-10 flex flex-col items-center">
   <div class="flex flex-col gap-2 w-200">
-    <a routerLink="/tasks" class="text-gray-500 text-xl cursor-pointer hover:text-gray-700">← Back to Tasks</a>
+    <a routerLink="/tasks" class="text-gray-500 text-xl font-medium cursor-pointer hover:text-gray-700">← Back to Tasks</a>
     @if(task(); as task){
       <div class="flex flex-col gap-4 border border-gray-300 rounded-md mt-6 p-7">
         <div class="flex flex-col gap-2 pb-4 border-b border-gray-300">
@@ -10,7 +10,7 @@
               <span class="px-2 py-0.5 text-center text-lg rounded-lg font-[500]" [class]="getStatusClasses(task.status)">{{ statusLabels[task.status] }}</span>
             </div>
             <div class="flex gap-4 items-center">
-              <span class="text-gray-500 cursor-pointer p-1 rounded-sm hover:bg-blue-300/30 hover:text-blue-500">
+              <span class="text-gray-500 cursor-pointer p-1 rounded-sm hover:bg-blue-300/30 hover:text-blue-500" (click)="openEditTaskDialog()">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                 </svg>
@@ -67,10 +67,8 @@
       </div>
     } @else {
       <div class="flex flex-col items-center justify-center gap-4 mt-20 text-center">
-        <p class="text-2xl font-bold text-gray-300">Task not found</p>
-        <a routerLink="/tasks" class="text-sm font-semibold text-blue-500 hover:underline">
-          ← Back to Board
-        </a>
+        <p class="text-2xl font-bold text-gray-500">Task not found</p>
+        <p class="text-xl font-medium text-gray-400">This task may have been deleted</p>
       </div>
     }
   </div>

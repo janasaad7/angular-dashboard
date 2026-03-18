@@ -18,6 +18,9 @@ export interface ITask {
   completedAt?: string;
 }
 
+export const TASK_STATUSES: TTaskStatus[] = ['todo', 'in_progress', 'done'];
+export const TASK_PRIORITIES: TTaskPriority[] = ['low', 'medium', 'high'];
+
 export const STATUS_LABELS: Record<TTaskStatus, string> = {
   todo: 'Todo',
   in_progress: 'In Progress',

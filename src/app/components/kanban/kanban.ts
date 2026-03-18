@@ -82,6 +82,7 @@ export class KanbanComponent {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data,
+      panelClass: 'rounded-dialog',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
