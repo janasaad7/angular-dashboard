@@ -12,10 +12,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { IConfirmDialogData } from '../../models/confirm-dialog-data';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-kanban',
-  imports: [CdkDropList, CdkDrag, DragDropModule, CdkDragHandle, CdkDragPlaceholder],
+  imports: [CdkDropList, CdkDrag, DragDropModule, CdkDragHandle, CdkDragPlaceholder, RouterLink],
   templateUrl: './kanban.html',
   styleUrl: './kanban.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,10 +25,11 @@ export class KanbanComponent {
   #taskService = inject(TaskService);
   dialog = inject(MatDialog);
 
-
   columns: { status: TTaskStatus; label: string; color: string }[] = [
     { status: 'todo', label: STATUS_LABELS['todo'], color: STATUS_COLORS['todo'] },
-    { status: 'in_progress', label: STATUS_LABELS['in_progress'], color: STATUS_COLORS['in_progress'] },
+    {
+      status: 'in_progress', label: STATUS_LABELS['in_progress'], color: STATUS_COLORS['in_progress'],
+    },
     { status: 'done', label: STATUS_LABELS['done'], color: STATUS_COLORS['done'] },
   ];
 
@@ -46,10 +48,14 @@ export class KanbanComponent {
 
   getPriorityClasses(priority: string): string {
     switch (priority) {
-      case 'high': return 'bg-red-500/10 text-red-400';
-      case 'medium': return 'bg-yellow-500/10 text-yellow-400';
-      case 'low': return 'bg-green-500/10 text-green-400';
-      default: return '';
+      case 'high':
+        return 'bg-red-500/10 text-red-400';
+      case 'medium':
+        return 'bg-yellow-500/10 text-yellow-400';
+      case 'low':
+        return 'bg-green-500/10 text-green-400';
+      default:
+        return '';
     }
   }
 
@@ -78,7 +84,7 @@ export class KanbanComponent {
       data,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.#taskService.deleteTask(taskId);
       }

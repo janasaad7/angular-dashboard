@@ -15,7 +15,7 @@
         (cdkDropListDropped)="drop($event, col.status)"
       >
         @for (task of getTasksForStatus(col.status); track task.id) {
-          <div class="kanban__card bg-white rounded-lg p-4 flex flex-col gap-4" cdkDrag [cdkDragData]="task">
+          <div class="kanban__card bg-white rounded-lg p-4 flex flex-col gap-4 cursor-pointer hover:opacity-80" cdkDrag [cdkDragData]="task">
             <div *cdkDragPlaceholder class="kanban__card__placeholder"></div>
 
             <div class="flex justify-between">
@@ -34,10 +34,13 @@
               </span>
             </div>
 
-            <div class="title-description flex flex-col gap-2">
-              <h3 class="text-gray-900 text-lg font-semibold">{{ task.title }}</h3>
-              <p class="text-gray-600 truncate">{{ task.description }}</p>
-            </div>
+            <a [routerLink]="['/tasks', task.id]">
+              <div class="title-description flex flex-col gap-2">
+                <h3 class="text-gray-900 text-lg font-semibold">{{ task.title }}</h3>
+                <p class="text-gray-600 truncate">{{ task.description }}</p>
+              </div>
+            </a>
+
             <div class="flex justify-between">
               <div class="due-date text-gray-600 flex items-center gap-1">
                 <svg aria-hidden="true" width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">

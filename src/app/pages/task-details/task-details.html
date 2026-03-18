@@ -1,0 +1,77 @@
+<main class="px-30 py-10 flex flex-col items-center">
+  <div class="flex flex-col gap-2 w-200">
+    <a routerLink="/tasks" class="text-gray-500 text-xl cursor-pointer hover:text-gray-700">← Back to Tasks</a>
+    @if(task(); as task){
+      <div class="flex flex-col gap-4 border border-gray-300 rounded-md mt-6 p-7">
+        <div class="flex flex-col gap-2 pb-4 border-b border-gray-300">
+          <div class="flex justify-between items-center">
+            <div class="flex gap-4 items-center">
+              <span class="px-2 py-0.5 text-center text-lg rounded-lg font-[500]" [class]="getPriorityClasses(task.priority)">{{ priorityLabels[task.priority] }}</span>
+              <span class="px-2 py-0.5 text-center text-lg rounded-lg font-[500]" [class]="getStatusClasses(task.status)">{{ statusLabels[task.status] }}</span>
+            </div>
+            <div class="flex gap-4 items-center">
+              <span class="text-gray-500 cursor-pointer p-1 rounded-sm hover:bg-blue-300/30 hover:text-blue-500">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                </svg>
+              </span>
+              <span class="text-gray-500 cursor-pointer p-1 rounded-sm hover:bg-red-300/30 hover:text-red-500" (click)="openDeleteConfirmationDialog(task.id)">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900">{{ task.title }}</h1>
+        </div>
+
+        <div class="flex flex-col gap-2 pb-4 border-b border-gray-300">
+          <h1 class="text-gray-800 text-xl font-[500]">Description</h1>
+          <p class="text-gray-600 text-lg">{{ task.description }}</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pb-4 border-b border-gray-300">
+          <div class="flex flex-col gap-1">
+            <p class="text-lg text-gray-800 font-medium">Assignee</p>
+            <div class="flex items-center gap-2">
+              <span class="size-7 rounded-full bg-gray-200 text-gray-700 text-xs font-bold flex items-center justify-center">
+                {{ task.assignee.avatar }}
+              </span>
+              <span class="text-sm font-medium text-gray-600">{{ task.assignee.name }}</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="text-lg text-gray-800 font-medium">Due Date</p>
+            <p class="text-sm font-medium text-gray-600">{{ task.dueDate }}</p>
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="text-lg text-gray-800 font-medium">Created</p>
+            <p class="text-sm font-medium text-gray-600">{{ task.createdAt | date:'MMM d, yyyy' }}</p>
+          </div>
+          <div class="flex flex-col gap-1">
+            <p class="text-lg text-gray-800 font-medium">Last Updated</p>
+            <p class="text-sm font-medium text-gray-600">{{ task.updatedAt | date:'MMM d, yyyy' }}</p>
+          </div>
+        </div>
+
+        @if (task.tags.length > 0) {
+          <div class="flex flex-col gap-2">
+            <p class="text-lg text-gray-800 font-medium">Tags</p>
+            <div class="flex flex-wrap gap-2">
+              @for (tag of task.tags; track tag) {
+                <span class="text-sm px-3 py-1 bg-gray-200 text-gray-600 rounded-full">{{ tag }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="flex flex-col items-center justify-center gap-4 mt-20 text-center">
+        <p class="text-2xl font-bold text-gray-300">Task not found</p>
+        <a routerLink="/tasks" class="text-sm font-semibold text-blue-500 hover:underline">
+          ← Back to Board
+        </a>
+      </div>
+    }
+  </div>
+</main>
