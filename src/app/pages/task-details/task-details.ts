@@ -7,7 +7,8 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 import { PRIORITY_LABELS, STATUS_LABELS } from '../../models/task';
 import { IConfirmDialogData } from '../../models/confirm-dialog-data';
 import { DatePipe } from '@angular/common';
-import { EditTaskDialogComponent } from '../../components/edit-task-dialog/edit-task-dialog';
+import { TaskFormDialogComponent } from '../../components/task-form-dialog/task-form-dialog';
+import { ITaskDialogData } from '../../models/task-dialog-data';
 
 @Component({
   selector: 'app-task-details',
@@ -75,9 +76,14 @@ export class TaskDetailsComponent {
   }
 
   openEditTaskDialog(): void {
-    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+    const data: ITaskDialogData = {
+      task: this.task()!,
+      users: this.#taskService.users(),
+    };
+
+    const dialogRef = this.dialog.open(TaskFormDialogComponent, {
       width: '500px',
-      data: this.task(),
+      data: data,
       panelClass: 'rounded-dialog',
     });
 

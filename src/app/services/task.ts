@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { ITask, TTaskStatus } from '../models/task';
 import { generateId } from '../utils/helpers';
 import { HttpClient } from '@angular/common/http';
+import { IUser } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,10 @@ import { HttpClient } from '@angular/common/http';
 export class TaskService {
   #http = inject(HttpClient);
   #tasks = signal<ITask[]>([]);
+  #users = signal<IUser[]>([]);
 
   tasks = this.#tasks.asReadonly();
+  users = this.#users.asReadonly();
 
   todoTasks = computed(() => this.#tasks().filter(t => t.status === 'todo'));
   inProgressTasks = computed(() => this.#tasks().filter(t => t.status === 'in_progress'));
@@ -26,6 +29,7 @@ export class TaskService {
 
   constructor() {
     this.#loadTasks();
+    this.#loadUsers();
   }
 
   #loadTasks(): void {
@@ -33,6 +37,11 @@ export class TaskService {
       .subscribe(response => {
         this.#tasks.set(response.tasks);
       });
+  }
+
+  #loadUsers(): void {
+    this.#http.get<{ users: IUser[] }>('data-fetching/users.json')
+      .subscribe(response => this.#users.set(response.users));
   }
 
   getTaskById(id: string): ITask | undefined {
