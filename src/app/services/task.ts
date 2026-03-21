@@ -11,25 +11,28 @@ export class TaskService {
   #http = inject(HttpClient);
   #tasks = signal<ITask[]>([]);
   #users = signal<IUser[]>([]);
+  #statistics = signal<any[]>([]);
 
   tasks = this.#tasks.asReadonly();
   users = this.#users.asReadonly();
+  statistics = this.#statistics.asReadonly();
 
   todoTasks = computed(() => this.#tasks().filter(t => t.status === 'todo'));
   inProgressTasks = computed(() => this.#tasks().filter(t => t.status === 'in_progress'));
   doneTasks = computed(() => this.#tasks().filter(t => t.status === 'done'));
 
   taskStats = computed(() => ({
-    total: this.#tasks().length,
+    total: this.tasks().length,
     todo: this.todoTasks().length,
     inProgress: this.inProgressTasks().length,
     done: this.doneTasks().length,
-    overdue: this.#tasks().filter(t => t.isOverdue && t.status !== 'done').length,
+    overdue: this.tasks().filter(task => task.isOverdue && task.status !== 'done').length,
   }));
 
   constructor() {
     this.#loadTasks();
     this.#loadUsers();
+    this.#loadStatistics();
   }
 
   #loadTasks(): void {
@@ -42,6 +45,11 @@ export class TaskService {
   #loadUsers(): void {
     this.#http.get<{ users: IUser[] }>('data-fetching/users.json')
       .subscribe(response => this.#users.set(response.users));
+  }
+
+  #loadStatistics(): void {
+    this.#http.get<{ statistics: any[] }>('data-fetching/statistics.json')
+      .subscribe(response => this.#statistics.set(response.statistics));
   }
 
   getTaskById(id: string): ITask | undefined {

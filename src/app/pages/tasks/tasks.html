@@ -1,7 +1,10 @@
-<main class="p-7">
-  <div class="flex justify-between px-4">
-    <h1 class="text-3xl font-bold text-gray-800 pb-3">Task Board</h1>
-    <button class="bg-blue-700/80 px-3 rounded-lg text-lg font-semibold text-white cursor-pointer hover:bg-blue-800/80 transition duration-300 ease-in-out" (click)="openAddTaskDialog()">+ Add Task</button>
+<main class="p-8 flex flex-col gap-5">
+  <div class="flex justify-between items-center">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-3xl font-bold text-gray-800">Task Board</h1>
+      <p class="text-sm text-gray-500">Drag & drop tasks between columns</p>
+    </div>
+    <button class="bg-blue-700/80 px-3 rounded-lg text-lg font-semibold text-white cursor-pointer hover:bg-blue-800/80 transition duration-300 ease-in-out h-10" (click)="openAddTaskDialog()">+ Add Task</button>
   </div>
   <app-kanban></app-kanban>
 </main>
