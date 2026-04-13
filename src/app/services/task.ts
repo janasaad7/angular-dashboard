@@ -13,7 +13,6 @@ export class TaskService {
   #users = signal<IUser[]>([]);
   #statistics = signal<any[]>([]);
 
-  tasks = this.#tasks.asReadonly();
   users = this.#users.asReadonly();
   statistics = this.#statistics.asReadonly();
 
@@ -22,12 +21,27 @@ export class TaskService {
   doneTasks = computed(() => this.#tasks().filter(t => t.status === 'done'));
 
   taskStats = computed(() => ({
-    total: this.tasks().length,
+    total: this.#tasks().length,
     todo: this.todoTasks().length,
     inProgress: this.inProgressTasks().length,
     done: this.doneTasks().length,
-    overdue: this.tasks().filter(task => task.isOverdue && task.status !== 'done').length,
+    overdue: this.#tasks().filter(task => task.isOverdue && task.status !== 'done').length,
   }));
+
+  tasksByDay = computed(() => {
+    const map = new Map<string, number>();
+    this.#tasks().forEach(t => {
+      const day = new Date(t.createdAt).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      });
+      map.set(day, (map.get(day) ?? 0) + 1);
+    });
+
+    return new Map([...map.entries()].sort((a, b) => {
+      return new Date(a[0]).getTime() - new Date(b[0]).getTime();
+    }));
+  });
 
   constructor() {
     this.#loadTasks();
